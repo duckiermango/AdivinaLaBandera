@@ -2,6 +2,7 @@ package com.example.migue.adivinalabandera;
 
 
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,12 +23,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Pais> listapaises;
     Pais paiscorrecto;
     ImageView imaok;
+    MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Declaramos el hilo
+        //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
+        mp=MediaPlayer.create(this,R.raw.cli);
+        //Declaramos el hilo
         final GestionPaises ges = new GestionPaises(this);
         //Ejecutamos el hilo para cargar los paises
         ges.execute();
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
+                    mp.start();
                     evaluarespuesta(b,libotones);
 
                     }
