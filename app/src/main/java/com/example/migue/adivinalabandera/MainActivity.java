@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Button> libotones;
     TextView tiempo;
     TextView puntos;
+    TextView puntosmal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         imaok=findViewById(R.id.imagenok);
         tiempo=findViewById(R.id.cuenta);
         puntos=findViewById(R.id.puntos);
+        puntosmal=findViewById(R.id.puntosmal);
 
         mp=MediaPlayer.create(this,R.raw.cli);
 
@@ -146,14 +148,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void temporizador(){
+        //Inicializamos el contador
         new CountDownTimer(31000, 1000) {
 
             public void onTick(long millisUntilFinished) {
+                //Actualizamos el temporizador segundo a segundo
                 String tiem="" + millisUntilFinished / 1000;
                 tiempo.setText(tiem);
             }
 
             public void onFinish() {
+                //Acaba el tiempo desactivamos los botones
                 controlbotones(libotones,false);
                 tiempo.setText("FIN");
             }
@@ -162,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void controlbotones(ArrayList<Button> liboton,boolean flag){
 
+        //Recorremos los botones para activarlos/desactivarlos
         for (int i = 0; i < liboton.size(); i++) {
             liboton.get(i).setEnabled(flag);
         }
@@ -171,17 +177,22 @@ public class MainActivity extends AppCompatActivity {
     public void evaluarespuesta(Button b, ArrayList libotones){
 
         if (b.getText().equals(paiscorrecto.getNombre())) {
-
-            Toast.makeText(MainActivity.this, "Correcto", Toast.LENGTH_SHORT).show();
+            //Asignamos la image de error contamos la respuesta equivocada
             imaok.setImageResource(R.drawable.ok);
             //Asignamos un punto cada vez que acertamos una bandera
             String punt=String.valueOf(Integer.parseInt(puntos.getText().toString())+1);
             puntos.setText(punt);
+            //Cambiamos de bandera
             paiscorrecto = asignabotones(libotones, listapaises);
 
         } else {
-            Toast.makeText(MainActivity.this, "Mojon", Toast.LENGTH_SHORT).show();
+            //Asignamos la image de error contamos la respuesta equivocada
             imaok.setImageResource(R.drawable.mal);
+            //Asignamos un punto cada vez que acertamos una bandera
+            String punt=String.valueOf(Integer.parseInt(puntosmal.getText().toString())+1);
+            puntosmal.setText(punt);
+            //Cambiamos de bandera
+            paiscorrecto = asignabotones(libotones, listapaises);
         }
     }
 
@@ -216,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                 botones.get(i).setTag(paisno);
                 botones.get(i).setText(paisno.getNombre());
             }
-
 
         return pais;
     }
