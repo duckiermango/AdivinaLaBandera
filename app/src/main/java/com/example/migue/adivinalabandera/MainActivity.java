@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,8 +32,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
-        mp=MediaPlayer.create(this,R.raw.cli);
-        //Declaramos el hilo
+        //mp=MediaPlayer.create(this,R.raw.cli);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem opcion_menu) {
+
+        int id=opcion_menu.getItemId();
+
+        if(id==R.id.inicia) {
+            cargajuego();
+
+            return true;
+
+        }
+
+        return true;
+    }
+
+    public void cargajuego(){
+        //Declaramos el Hilo
         final GestionPaises ges = new GestionPaises(this);
         //Ejecutamos el hilo para cargar los paises
         ges.execute();
@@ -40,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (!ges.isOk()) {
-            
+
             //Muestra un dialogo que para avisar de que vamos a cerrar el juego
             AlertDialog alerti;
             AlertDialog.Builder dialog=new AlertDialog.Builder(this);
@@ -88,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                    mp.start();
-                    evaluarespuesta(b,libotones);
+                        mp.start();
+                        evaluarespuesta(b,libotones);
 
                     }
                 });
@@ -97,12 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-    }
-
-
-
-
-
+        }
     }
 
     public void evaluarespuesta(Button b, ArrayList libotones){
