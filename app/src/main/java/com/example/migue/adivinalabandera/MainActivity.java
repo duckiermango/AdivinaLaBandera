@@ -2,6 +2,7 @@ package com.example.migue.adivinalabandera;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -123,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
                     });
             alerti = dialog.create();
             alerti.show();
+
+            return true;
         }
         if(id==R.id.reinicia){
-
+            //IF para controlar que no es el inicio del juego
             if(!flag){
                 //Muestra un dialogo que para avisar de que vamos a cerrar el juego
                 AlertDialog alerti;
@@ -164,9 +167,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
             else{
-                System.out.println("jamoncillo");
+
+            }
+            return true;
+        }
+
+        //Opcion de enu para oompartir la nota con aplicaciones de texto plano
+        if(id==R.id.comparte){
+            //IF para controlar que no es el inicio del juego que estamos a 0
+            if(!flag){
+                // Creamos el intent le asignamos el tipo y el contenido del intent
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT,"Puntuacion");
+                //Preparamos el String del intent
+                String pun = "!Mira mi puntuacion en \"AdivinaLaBandera\"¡ " +
+                        "=> BIEN: "+puntos.getText().toString()+"MAL: "+puntosmal.getText().toString();
+                i.putExtra(Intent.EXTRA_TEXT, pun);
+                //Se lanza el intent
+                startActivity(i);
+            }
+            else{
+
             }
 
+
+            return true;
         }
 
         return true;
