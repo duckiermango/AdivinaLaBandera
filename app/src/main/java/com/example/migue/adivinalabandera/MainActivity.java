@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tiempo;
     TextView puntos;
     TextView puntosmal;
+    boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         tiempo=findViewById(R.id.cuenta);
         puntos=findViewById(R.id.puntos);
         puntosmal=findViewById(R.id.puntosmal);
+        flag=false;
 
         mp=MediaPlayer.create(this,R.raw.cli);
 
@@ -97,12 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(id==R.id.inicia) {
             //Habilitamos los botones
+            this.flag=true;
             controlbotones(libotones,true);
             cargajuego();
             //Iniciamos el temporizador
             temporizador();
             opcion_menu.setEnabled(false);
-            flag=true;
+
 
             return true;
         }
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(id==R.id.reinicia){
             //IF para controlar que no es el inicio del juego
-            if(!flag){
+            if(this.flag){
                 //Muestra un dialogo que para avisar de que vamos a cerrar el juego
                 AlertDialog alerti;
                 AlertDialog.Builder dialog=new AlertDialog.Builder(this);
@@ -175,14 +178,14 @@ public class MainActivity extends AppCompatActivity {
         //Opcion de enu para oompartir la nota con aplicaciones de texto plano
         if(id==R.id.comparte){
             //IF para controlar que no es el inicio del juego que estamos a 0
-            if(!flag){
+            if(this.flag){
                 // Creamos el intent le asignamos el tipo y el contenido del intent
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_SUBJECT,"Puntuacion");
                 //Preparamos el String del intent
                 String pun = "!Mira mi puntuacion en \"AdivinaLaBandera\"¡ " +
-                        "=> BIEN: "+puntos.getText().toString()+"MAL: "+puntosmal.getText().toString();
+                        "=> BIEN: "+puntos.getText().toString()+"/MAL: "+puntosmal.getText().toString();
                 i.putExtra(Intent.EXTRA_TEXT, pun);
                 //Se lanza el intent
                 startActivity(i);
