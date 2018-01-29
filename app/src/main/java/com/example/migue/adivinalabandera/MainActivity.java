@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Pais paiscorrecto;
     ImageView imaok;
     MediaPlayer mp;
+    ArrayList<Button> libotones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,39 @@ public class MainActivity extends AppCompatActivity {
         //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
         //mp=MediaPlayer.create(this,R.raw.cli);
+
+        //Asignamos los botones de la vista
+        Button boton1 = findViewById(R.id.boton1);
+        Button boton2 = findViewById(R.id.boton2);
+        Button boton3 = findViewById(R.id.boton3);
+        Button boton4 = findViewById(R.id.boton4);
+
+        //Creamos una lista
+        libotones = new ArrayList();
+        libotones.add(boton1);
+        libotones.add(boton2);
+        libotones.add(boton3);
+        libotones.add(boton4);
+
+        //Apaga los botones
+        controlbotones(libotones,false);
+
+        //Asignamos los onclick
+        for (int i = 0; i < libotones.size(); i++) {
+
+            final Button b = libotones.get(i);
+
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //mp.start();
+                    evaluarespuesta(b,libotones);
+
+                }
+            });
+
+        }
 
     }
 
@@ -51,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         int id=opcion_menu.getItemId();
 
         if(id==R.id.inicia) {
+            //Habilitamos los botones
+            controlbotones(libotones,true);
             cargajuego();
 
             return true;
@@ -95,39 +131,18 @@ public class MainActivity extends AppCompatActivity {
             listapaises = ges.getListapaises();
             //System.out.println(listapaises.get(0).getNombre()+"fdisifud");
 
-            //Asignamos los botones de la vista
-            Button boton1 = findViewById(R.id.boton1);
-            Button boton2 = findViewById(R.id.boton2);
-            Button boton3 = findViewById(R.id.boton3);
-            Button boton4 = findViewById(R.id.boton4);
-
-            //Creamos una lista
-            final ArrayList<Button> libotones = new ArrayList();
-            libotones.add(boton1);
-            libotones.add(boton2);
-            libotones.add(boton3);
-            libotones.add(boton4);
-
             paiscorrecto = asignabotones(libotones, listapaises);
-
-            for (int i = 0; i < libotones.size(); i++) {
-
-                final Button b = libotones.get(i);
-
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        mp.start();
-                        evaluarespuesta(b,libotones);
-
-                    }
-                });
-
-            }
 
 
         }
+    }
+
+    public void controlbotones(ArrayList<Button> liboton,boolean flag){
+
+        for (int i = 0; i < liboton.size(); i++) {
+            liboton.get(i).setEnabled(flag);
+        }
+
     }
 
     public void evaluarespuesta(Button b, ArrayList libotones){
