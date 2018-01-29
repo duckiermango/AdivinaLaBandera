@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem opcion_menu) {
 
         int id=opcion_menu.getItemId();
+        boolean flag=false;
 
         if(id==R.id.inicia) {
             //Habilitamos los botones
@@ -99,8 +100,72 @@ public class MainActivity extends AppCompatActivity {
             cargajuego();
             //Iniciamos el temporizador
             temporizador();
+            opcion_menu.setEnabled(false);
+            flag=true;
 
             return true;
+        }
+
+        if(id==R.id.acerca){
+            //Muestra un dialogo que para avisar de que vamos a cerrar el juego
+            AlertDialog alerti;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+            dialog.setTitle("Acerca de");
+            dialog.setMessage("Realizada por miguel angel griñan arocas");
+            dialog.setPositiveButton(
+                    "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+
+                        }
+                    });
+            alerti = dialog.create();
+            alerti.show();
+        }
+        if(id==R.id.reinicia){
+
+            if(!flag){
+                //Muestra un dialogo que para avisar de que vamos a cerrar el juego
+                AlertDialog alerti;
+                AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                dialog.setTitle("Reiniciar");
+                dialog.setMessage("Esta seguro de que desea reiniciar la partida?");
+                dialog.setPositiveButton(
+                        "SI",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Seteamos las puntuaciones a 0
+                                puntos.setText("0");
+                                puntosmal.setText("0");
+                                //Habilitamos los botones
+                                controlbotones(libotones,true);
+                                cargajuego();
+
+                                //Iniciamos el temporizador
+                                temporizador();
+
+                                dialog.cancel();
+
+                            }
+                        });
+                dialog.setNegativeButton(
+                        "NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+
+                            }
+                        });
+                alerti = dialog.create();
+                alerti.show();
+
+            }
+            else{
+                System.out.println("jamoncillo");
+            }
 
         }
 
