@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
-        //tiempo=findViewById(R.id.t);
+        tiempo=findViewById(R.id.cuenta);
         //mp=MediaPlayer.create(this,R.raw.cli);
 
         //Asignamos los botones de la vista
@@ -143,16 +143,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void temporizador(){
-        new CountDownTimer(20000, 1000) {
+        new CountDownTimer(31000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                String tiempo="" + millisUntilFinished / 1000;
-                Toast.makeText(MainActivity.this, tiempo, Toast.LENGTH_SHORT).show();
-                //tiempo.setText("" + millisUntilFinished / 1000);
+                String tiem="" + millisUntilFinished / 1000;
+                tiempo.setText(tiem);
             }
 
             public void onFinish() {
-                //tiempo.setText(""+0);
+                tiempo.setText("FIN");
             }
         }.start();
     }

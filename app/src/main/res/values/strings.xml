@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AdivinaLaBandera</string>
+    <string name="valor">30</string>
 </resources>
