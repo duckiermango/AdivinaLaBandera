@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.inicia) {
             //Habilitamos los botones
             controlbotones(libotones,true);
-            temporizador();
             cargajuego();
+            //Iniciamos el temporizador
+            temporizador();
 
             return true;
 
@@ -134,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Asigamos la lista que contiene los paises para utilizarla
             listapaises = ges.getListapaises();
-            //System.out.println(listapaises.get(0).getNombre()+"fdisifud");
-
+            //Elegimos un pais al azaar y lo asignamos
             paiscorrecto = asignabotones(libotones, listapaises);
 
 
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Asignamos el pais a un boton y asignamos la imagen
         asignaimagen(pais);
-        //desordenamos la lista
+        //Desordenamos la lista
         Collections.shuffle(botones);
         botones.get(0).setTag(pais);
         botones.get(0).setText(pais.getNombre());
