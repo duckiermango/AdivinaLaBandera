@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mp;
     ArrayList<Button> libotones;
     TextView tiempo;
+    TextView puntos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
         tiempo=findViewById(R.id.cuenta);
+        puntos=findViewById(R.id.puntos);
+
         //mp=MediaPlayer.create(this,R.raw.cli);
 
         //Asignamos los botones de la vista
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
+                controlbotones(libotones,false);
                 tiempo.setText("FIN");
             }
         }.start();
@@ -165,11 +169,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void evaluarespuesta(Button b, ArrayList libotones){
+
         if (b.getText().equals(paiscorrecto.getNombre())) {
 
             Toast.makeText(MainActivity.this, "Correcto", Toast.LENGTH_SHORT).show();
             imaok.setImageResource(R.drawable.ok);
-
+            //Asignamos un punto cada vez que acertamos una bandera
+            String punt=String.valueOf(Integer.parseInt(puntos.getText().toString())+1);
+            puntos.setText(punt);
             paiscorrecto = asignabotones(libotones, listapaises);
 
         } else {
