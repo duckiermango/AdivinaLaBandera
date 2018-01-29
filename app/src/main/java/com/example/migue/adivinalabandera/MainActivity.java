@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         tiempo=findViewById(R.id.cuenta);
         puntos=findViewById(R.id.puntos);
 
-        //mp=MediaPlayer.create(this,R.raw.cli);
+        mp=MediaPlayer.create(this,R.raw.cli);
 
         //Asignamos los botones de la vista
         Button boton1 = findViewById(R.id.boton1);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    //mp.start();
+                    mp.start();
                     evaluarespuesta(b,libotones);
 
                 }
