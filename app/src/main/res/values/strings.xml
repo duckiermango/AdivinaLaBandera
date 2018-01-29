@@ -2,4 +2,5 @@
     <string name="app_name">AdivinaLaBandera</string>
     <string name="valor">30</string>
     <string name="puntos">0</string>
+    <string name="seg">seg</string>
 </resources>
