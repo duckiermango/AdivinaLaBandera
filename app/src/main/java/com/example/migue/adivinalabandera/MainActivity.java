@@ -3,6 +3,7 @@ package com.example.migue.adivinalabandera;
 
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
     ImageView imaok;
     MediaPlayer mp;
     ArrayList<Button> libotones;
+    TextView tiempo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Asignamos los elementos a sus variables
         imaok=findViewById(R.id.imagenok);
+        //tiempo=findViewById(R.id.t);
         //mp=MediaPlayer.create(this,R.raw.cli);
 
         //Asignamos los botones de la vista
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.inicia) {
             //Habilitamos los botones
             controlbotones(libotones,true);
+            temporizador();
             cargajuego();
 
             return true;
@@ -135,6 +140,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void temporizador(){
+        new CountDownTimer(20000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String tiempo="" + millisUntilFinished / 1000;
+                Toast.makeText(MainActivity.this, tiempo, Toast.LENGTH_SHORT).show();
+                //tiempo.setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //tiempo.setText(""+0);
+            }
+        }.start();
     }
 
     public void controlbotones(ArrayList<Button> liboton,boolean flag){
