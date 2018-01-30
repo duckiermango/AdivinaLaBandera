@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_purple"
-    tools:background="@android:color/holo_purple"
+    android:background="@android:color/holo_green_dark"
+    tools:background="@android:color/holo_green_dark"
     tools:context="com.example.migue.adivinalabandera.MainActivity">
 
     <ImageView

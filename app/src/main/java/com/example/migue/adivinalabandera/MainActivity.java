@@ -29,11 +29,12 @@ public class MainActivity extends AppCompatActivity {
     Pais paiscorrecto;
     ImageView imaok;
     MediaPlayer mp;
+    MediaPlayer mpfin;
     ArrayList<Button> libotones;
     TextView tiempo;
     TextView puntos;
     TextView puntosmal;
-    boolean flag;
+    static boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         puntos=findViewById(R.id.puntos);
         puntosmal=findViewById(R.id.puntosmal);
         flag=false;
-
+        //Intanciamos los sonidos de la partida
         mp=MediaPlayer.create(this,R.raw.cli);
-
+        mpfin=MediaPlayer.create(this,R.raw.sonifin);
         //Asignamos los botones de la vista
         Button boton1 = findViewById(R.id.boton1);
         Button boton2 = findViewById(R.id.boton2);
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Apaga los botones
         controlbotones(libotones,false);
+        this.setTitle("");
 
         //Asignamos los onclick
         for (int i = 0; i < libotones.size(); i++) {
@@ -92,19 +94,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem opcion_menu) {
+    public boolean onOptionsItemSelected(final MenuItem opcion_menu) {
 
         int id=opcion_menu.getItemId();
         boolean flag=false;
 
         if(id==R.id.inicia) {
-            //Habilitamos los botones
-            this.flag=true;
-            controlbotones(libotones,true);
-            cargajuego();
-            //Iniciamos el temporizador
-            temporizador();
-            opcion_menu.setEnabled(false);
+            //Asignamos el cerrojo a true
+            //Muestra un dialogo que para avisar del inicio el juego
+            AlertDialog alerti;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+            dialog.setTitle("INICIO¡");
+            dialog.setMessage("La partida va a comenzar...PREPARADO¡");
+            dialog.setPositiveButton(
+                    "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //Habilitamos los botones
+                            controlbotones(libotones,true);
+                            cargajuego();
+                            //Iniciamos el temporizador
+                            temporizador();
+                            opcion_menu.setEnabled(false);
+                            //Cerramos el dialogo
+                            dialog.cancel();
+
+                        }
+                    });
+            alerti = dialog.create();
+            alerti.show();
 
 
             return true;
@@ -185,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_SUBJECT,"Puntuacion");
                 //Preparamos el String del intent
                 String pun = "!Mira mi puntuacion en \"AdivinaLaBandera\"¡ " +
-                        "=> BIEN: "+puntos.getText().toString()+"/MAL: "+puntosmal.getText().toString();
+                        "=> BIEN: "+puntos.getText().toString()+" / MAL: "+puntosmal.getText().toString();
                 i.putExtra(Intent.EXTRA_TEXT, pun);
                 //Se lanza el intent
                 startActivity(i);
@@ -204,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
     public void cargajuego(){
         //Declaramos el Hilo
         final GestionPaises ges = new GestionPaises(this);
+        MainActivity.flag=false;
         //Ejecutamos el hilo para cargar los paises
         ges.execute();
         //Bucle que controla que haya terminado de leer todos los paises
@@ -255,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
                 //Acaba el tiempo desactivamos los botones
                 controlbotones(libotones,false);
                 tiempo.setText("FIN");
+                MainActivity.flag=true;
+                mpfin.start();
             }
         }.start();
     }
@@ -302,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView t=findViewById(R.id.caja);
 
         t.setImageBitmap(baima.getBitmap());
+        baima.cancel(true);
 
     }
 
