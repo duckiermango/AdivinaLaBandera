@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.reinicia){
             //IF para controlar que no es el inicio del juego
             if(this.flag){
-                //Muestra un dialogo que para avisar de que vamos a cerrar el juego
+                //Muestra un dialogo que para avisar de que vamos a reiniciar la partida
                 AlertDialog alerti;
                 AlertDialog.Builder dialog=new AlertDialog.Builder(this);
                 dialog.setTitle("Reiniciar");
@@ -275,7 +275,10 @@ public class MainActivity extends AppCompatActivity {
                 controlbotones(libotones,false);
                 tiempo.setText("FIN");
                 MainActivity.flag=true;
+                //Reproducimos el sonido final
                 mpfin.start();
+                //Mostramos un mensaje al final
+                mensajefinal();
             }
         }.start();
     }
@@ -345,6 +348,41 @@ public class MainActivity extends AppCompatActivity {
             }
 
         return pais;
+    }
+
+    public void mensajefinal(){
+        AlertDialog alerti;
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        dialog.setTitle("FIN DE LA PARTIDA");
+        dialog.setMessage("Puntucacion final => " +
+                        "BIEN: "+puntos.getText().toString()+" / MAL: "+puntosmal.getText().toString()+"Quiere volver a jugar?");
+        dialog.setPositiveButton(
+                "SI",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Seteamos las puntuaciones a 0
+                        puntos.setText("0");
+                        puntosmal.setText("0");
+                        //Habilitamos los botones
+                        controlbotones(libotones,true);
+                        cargajuego();
+                        //Iniciamos el temporizador
+                        temporizador();
+                        dialog.cancel();
+
+                    }
+                });
+        dialog.setNegativeButton(
+                "NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+
+                    }
+                });
+        alerti = dialog.create();
+        alerti.show();
     }
 
 

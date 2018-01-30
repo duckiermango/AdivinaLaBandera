@@ -19,6 +19,9 @@
         app:showAsAction="always"
         android:orderInCategory="15"/>
     <item android:id="@+id/acerca"
-        android:title="Acerca de" />
+        android:title="Acerca de"
+        android:icon="@android:drawable/ic_menu_manage"
+        app:showAsAction="always"
+        android:orderInCategory="15"/>
 
 </menu>
