@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void temporizador(){
         //Inicializamos el contador
-        new CountDownTimer(31000, 1000) {
+        new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //Actualizamos el temporizador segundo a segundo
