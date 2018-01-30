@@ -354,8 +354,8 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alerti;
         AlertDialog.Builder dialog=new AlertDialog.Builder(this);
         dialog.setTitle("FIN DE LA PARTIDA");
-        dialog.setMessage("Puntucacion final => " +
-                        "BIEN: "+puntos.getText().toString()+" / MAL: "+puntosmal.getText().toString()+"Quiere volver a jugar?");
+        dialog.setMessage("Puntuacion final => " +
+                        "BIEN: "+puntos.getText().toString()+" / MAL: "+puntosmal.getText().toString()+" Quiere volver a jugar?");
         dialog.setPositiveButton(
                 "SI",
                 new DialogInterface.OnClickListener() {
